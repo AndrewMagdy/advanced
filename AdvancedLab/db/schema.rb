@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118202025) do
+ActiveRecord::Schema.define(version: 20151118205221) do
+
+  create_table "Projects_Users", id: false, force: :cascade do |t|
+    t.integer "user_id",    null: false
+    t.integer "project_id", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
@@ -21,6 +26,14 @@ ActiveRecord::Schema.define(version: 20151118202025) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "direct_messages", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "reciever_id"
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text     "title"
     t.text     "body"
@@ -28,6 +41,22 @@ ActiveRecord::Schema.define(version: 20151118202025) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "recepient_id"
+  end
+
+  create_table "project_messages", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "sender_id"
+    t.text     "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "project_name"
+    t.string   "project_description"
+    t.string   "project_type"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|
