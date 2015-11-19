@@ -11,82 +11,88 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119105252) do
+ActiveRecord::Schema.define(version: 20151215224511) do
 
   create_table "Projects_Users", id: false, force: :cascade do |t|
-    t.integer "user_id",    null: false
-    t.integer "project_id", null: false
+    t.integer "user_id",    limit: 4, null: false
+    t.integer "project_id", limit: 4, null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text     "body"
-    t.integer  "user_id"
-    t.integer  "post_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "body",       limit: 65535
+    t.integer  "user_id",    limit: 4
+    t.integer  "post_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "direct_messages", force: :cascade do |t|
-    t.integer  "sender_id"
-    t.integer  "receiver_id"
-    t.text     "body"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "sender_id",   limit: 4
+    t.integer  "receiver_id", limit: 4
+    t.text     "body",        limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "friend_id"
+    t.integer  "user_id",    limit: 4
+    t.integer  "friend_id",  limit: 4
     t.boolean  "accepted"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "posts", force: :cascade do |t|
-    t.text     "title"
-    t.text     "body"
-    t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "recepient_id"
+    t.text     "title",        limit: 65535
+    t.text     "body",         limit: 65535
+    t.integer  "user_id",      limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "recepient_id", limit: 4
   end
 
   create_table "project_messages", force: :cascade do |t|
-    t.integer  "project_id"
-    t.integer  "sender_id"
-    t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "project_id", limit: 4
+    t.integer  "sender_id",  limit: 4
+    t.text     "body",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "project_name"
-    t.string   "project_description"
-    t.string   "project_type"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.string   "project_name",        limit: 255
+    t.string   "project_description", limit: 255
+    t.string   "project_type",        limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "settings", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "user_id"
-    t.integer  "privacy_level"
-    t.integer  "profile_color"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "user_id",       limit: 4
+    t.integer  "privacy_level", limit: 4
+    t.integer  "profile_color", limit: 4
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "user_name"
-    t.string   "password"
-    t.string   "loc_city"
-    t.string   "loc_country"
+    t.string   "first_name",       limit: 255
+    t.string   "last_name",        limit: 255
+    t.string   "user_name",        limit: 255
+    t.string   "password",         limit: 255
+    t.string   "loc_city",         limit: 255
+    t.string   "loc_country",      limit: 255
     t.date     "dob"
-    t.string   "profile_pic"
-    t.string   "gender"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "profile_pic",      limit: 255
+    t.string   "gender",           limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "provider",         limit: 255
+    t.string   "uid",              limit: 255
+    t.string   "oauth_token",      limit: 255
+    t.datetime "oauth_expires_at"
+    t.string   "email",            limit: 255
+    t.string   "name",             limit: 255
   end
 
 end
