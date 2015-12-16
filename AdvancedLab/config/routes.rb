@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
     namespace :api, defaults: { format: :json }do
         namespace :v1 do
-            resources :users, :posts, :sessions, :comments
+            resources :users, :posts, :sessions, :comments, :friendships
+            post 'friendships/:id/accept', to: 'friendships#accept'
+            post 'friends/unfriend', to: 'friendships#unfriend'
+            get 'posts/:user_id/myposts', to: 'posts#myposts'
+            get 'friendships/:user_id/myrequests', to: 'friendships#myrequests'
+            get 'posts/:post_id/comments/', to: 'comments#showComments'
+            get 'settings/:user_id', to: 'settings#show'
+            post 'settings/:user_id/update', to: 'settings#updateOrCreate'
+            get 'posts/:user_id/timeline', to: 'posts#timeline'
+            get 'friendships/:user_id/friends', to: 'friendships#myfriends'
         end
     end
     get 'auth/:provider/callback', to: 'sessions#create'
