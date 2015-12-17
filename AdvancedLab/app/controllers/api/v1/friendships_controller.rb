@@ -12,8 +12,14 @@ class Api::V1::FriendshipsController < Api::V1::BaseController
 
     def create
         @friendship = Friendship.create(friend_id: params[:friend_id],
-            user_id: params[:user_id], accepted: 0)
+            user_id: params[:user_id], accepted: 1)
         respond_with :api, :v1, @friendship
+    end
+
+    def newFriend
+        @friendship = Friendship.create(friend_id: params[:friend_id],
+                user_id: params[:user_id], accepted: 1)
+            respond_with :api, :v1, @friendship
     end
 
     def unfriend
@@ -27,8 +33,17 @@ class Api::V1::FriendshipsController < Api::V1::BaseController
     end
 
     def myfriends
-        @friends = Friendship.where('user_id = ?', params[:user_id])
+        @friends = Friendship.where("user_id = ?", params[:user_id])
         render json: @friends
+    end
+
+    def isfriends
+        @friend1 = Friendship.where("user_id = ? AND friend_id = ? AND accepted = 1",
+            params[:user_id], params[:friend_id]).take
+        @friend2 = Friendship.where("user_id = ? AND friend_id = ? AND accepted = 1",
+            params[:friend_id], params[:user_id]).take
+        isf = (@friend1.nil? && @friend2.nil?) ? 0 : 1
+        render json: {friends:  isf}
     end
 
     def accept
